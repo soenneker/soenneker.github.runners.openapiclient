@@ -72,6 +72,7 @@ public sealed class FileOperationsUtil : IFileOperationsUtil
         await _kiotaUtil.EnsureInstalled(cancellationToken);
 
         await _kiotaUtil.Generate(fixedFilePath, "GitHubOpenApiClient", Constants.Library, gitDirectory, cancellationToken);
+        await _openApiFixer.SanitizeGeneratedEnumMembers(Path.Combine(gitDirectory, "src", Constants.Library), cancellationToken).NoSync();
 
         await Restore(gitDirectory, cancellationToken);
 
